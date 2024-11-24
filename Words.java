@@ -2,7 +2,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 import java.util.HashSet;
@@ -70,6 +72,28 @@ public class Words
       String result;
       //TODO: Your work goes here
 
+      Map<Integer, List<String>> wordMap = stream.collect(
+        Collectors.groupingBy(
+            w -> w.length()
+        )
+      );
+
+      int maxLength = wordMap
+        .keySet()
+        .stream()
+        .max((x, y) -> Integer.valueOf(x).compareTo(y))
+        .orElse(0);
+
+        List<String> longestWords = wordMap.get(maxLength);
+
+        if (longestWords != null && !longestWords.isEmpty())
+        {
+            result = longestWords.get(0);
+        }
+        else
+        {
+            result = "none";
+        }
       return result;
    }
    
@@ -80,8 +104,10 @@ public class Words
    public static long wordCount(Stream<String> stream, int len)
    {
       long result;
-      //TODO: Your work goes here
-
+      
+      result = stream
+        .filter(w -> w.length() == len)
+        .count();
       return result;
    }
 }
