@@ -72,23 +72,26 @@ public class Words
       String result;
       //TODO: Your work goes here
 
+      //Create map where key is the length of each word and value is a List of all strings of that length.
       Map<Integer, List<String>> wordMap = stream.collect(
         Collectors.groupingBy(
             w -> w.length()
         )
       );
 
+      //Find the max length.
       int maxLength = wordMap
         .keySet()
         .stream()
         .max((x, y) -> Integer.valueOf(x).compareTo(y))
         .orElse(0);
 
+        //Create list of words with the longest length.
         List<String> longestWords = wordMap.get(maxLength);
 
         if (longestWords != null && !longestWords.isEmpty())
         {
-            result = longestWords.get(0);
+            result = longestWords.get(0);//Return first word in list.
         }
         else
         {
