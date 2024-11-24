@@ -44,11 +44,19 @@ public class Words
 
       try (Stream<String> lines = Files.lines(Paths.get(filename)))
       {
-        Stream<String> words = lines
+        result = lines
             .filter(w -> !w.endsWith("'s")) //Make sure stream doesn't include letters that end with "'s".
             .filter(w -> w.length() >= 10) //Stream only includes words with 10 letters or more.
-            .filter(w -> allLettersUnique(w)); //Stream only includes words with no duplicate letters.
+            .filter(w -> allLettersUnique(w)) //Stream only includes words with no duplicate letters.
+            .collect(Collectors.toList());
+
+        
       }
+      catch (IOException e)
+      {
+        result = List.of();
+      }
+
       
       return result;
    }
